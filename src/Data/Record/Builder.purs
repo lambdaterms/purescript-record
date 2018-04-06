@@ -41,9 +41,8 @@ derive newtype instance semigroupoidBuilder :: Semigroupoid Builder
 derive newtype instance categoryBuilder :: Category Builder
 
 nest
-  :: forall a l r1 sr2 r2
-   . RowCons l a r1 sr2
-  => RowCons l (Record sr2) r1 r2
+  :: forall l r1 sr2 r2
+   . RowCons l (Record sr2) r1 r2
   => RowLacks l r1
   => IsSymbol l
   => SProxy l
