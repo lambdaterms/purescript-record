@@ -40,6 +40,17 @@ build (Builder b) r1 = b (copyRecord r1)
 derive newtype instance semigroupoidBuilder :: Semigroupoid Builder
 derive newtype instance categoryBuilder :: Category Builder
 
+nest
+  :: forall a l r1 sr2 r2
+   . RowCons l a r1 sr2
+  => RowCons l (Record sr2) r1 r2
+  => RowLacks l r1
+  => IsSymbol l
+  => SProxy l
+  -> Builder (Record r1) (Record sr2)
+  -> Builder (Record r1) (Record r2)
+nest l b = Builder \r1 -> unsafeInsert (reflectSymbol l) (build b r1) r1
+
 -- | Build by inserting a new field.
 insert
   :: forall l a r1 r2
